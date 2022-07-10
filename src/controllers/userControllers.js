@@ -1,6 +1,8 @@
 import {db} from '../dbStrategy/mongo.js'
 import joi from 'joi'
 import bcrypt from 'bcrypt';
+import {v4 as uuid} from 'uuid'
+
 
 
 export async function createUser (request, response){
@@ -19,10 +21,10 @@ export async function createUser (request, response){
 
     await db.collection('users').insertOne({...usuario, password : passwordCriptografada, confirmPassword: passwordCriptografada })
     response.sendStatus(201)
+
 }
 
 export async function loginUser (request, response){
-    
     const usuario = request.body
     const schemaLogin = joi.object({
         email: joi.string().email().required(),
@@ -35,15 +37,11 @@ export async function loginUser (request, response){
     }
 
     const user = await db.collection('users').findOne({email: usuario.email})
-    if(!user){
+
+    if(user && bcrypt.compareSync(usuario.password, user.password)){
+        const token = uuid ()
+        return response.status(200).send({token})
+    }else {
         return response.sendStatus(401)
     }
-
-    const verificarSenha= bcrypt.compareSync(usuario.password, user.password)
-
-    if(!verificarSenha){
-        return response.sendStatus(401)
-    }
-
-    return response.sendStatus(200)
 }

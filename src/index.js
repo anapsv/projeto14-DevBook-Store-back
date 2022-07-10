@@ -5,8 +5,6 @@ import { json } from 'express';
 import booksRouter from './routes/booksRouter.js';
 import routes from "./routes.js"
 
-
-
 dotenv.config()
 
 const app = express();
@@ -15,7 +13,6 @@ app.use(cors());
 
 app.use(routes);
 app.use(booksRouter);
-
 
 
 app.listen(parseInt(process.env.PORT), () => {

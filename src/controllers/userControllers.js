@@ -4,7 +4,6 @@ import bcrypt from 'bcrypt';
 import {v4 as uuid} from 'uuid'
 
 
-
 export async function createUser (request, response){
     const usuario = request.body
     const schemaCadastro = joi.object({

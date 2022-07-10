@@ -1,12 +1,5 @@
-import dotenv from 'dotenv';
-import { MongoClient, ObjectId } from "mongodb"
+import {db} from '../dbStrategy/mongo.js';
 
-dotenv.config()
-const mongoClient = new MongoClient(process.env.MONGO_URI);
-let db;
-mongoClient.connect().then(() => {
-    db = mongoClient.db("devBook");
-});
-export async function createUser (requeste, response){
+export async function createUser (req, res){
 
 }

@@ -39,7 +39,8 @@ export async function loginUser (request, response){
 
     if(user && bcrypt.compareSync(usuario.password, user.password)){
         const token = uuid ()
-        return response.status(200).send({token})
+        console.log(user.name);
+        return response.status(200).send({name: user.name, token})
     }else {
         return response.sendStatus(401)
     }
